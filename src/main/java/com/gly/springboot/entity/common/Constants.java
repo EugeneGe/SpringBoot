@@ -1,4 +1,4 @@
-package com.gly.springboot.entity.sys;
+package com.gly.springboot.entity.common;
 
 /**
  * 常用常数
