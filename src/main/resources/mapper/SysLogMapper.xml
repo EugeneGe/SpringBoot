@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.gly.springboot.mapper.SysLogMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.gly.springboot.entity.sys.SysLog">
+        <id column="id" property="id"/>
+        <result column="ip" property="ip"/>
+        <result column="url" property="url"/>
+        <result column="method" property="method"/>
+        <result column="parameter" property="parameter"/>
+        <result column="controller" property="controller"/>
+        <result column="access_method" property="accessMethod"/>
+        <result column="headers" property="headers"/>
+        <result column="response" property="response"/>
+        <result column="login_account" property="loginAccount"/>
+        <result column="request_time" property="requestTime"/>
+        <result column="response_time" property="responseTime"/>
+        <result column="execution_duration" property="executionDuration"/>
+        <result column="user_agent" property="userAgent"/>
+        <result column="response_length" property="responseLength"/>
+        <result column="cache_status" property="cacheStatus"/>
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_List">
+        id
+        , ip, url, method, parameter, controller, access_method, headers, response, login_account, request_time, response_time, execution_duration, user_agent, response_length, cache_status
+    </sql>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        id
+        ,ip,url,method,parameter,controller,access_method AS accessMethod,headers,response,login_account AS loginAccount,request_time AS requestTime,response_time AS responseTime,execution_duration AS executionDuration,user_agent AS userAgent,response_length AS responseLength,cache_status AS cacheStatus
+    </sql>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List_2">
+        u
+        .
+        id
+        AS id,
+            u.ip AS ip,
+            u.url AS url,
+            u.method AS method,
+            u.parameter AS parameter,
+            u.controller AS controller,
+            u.access_method AS accessMethod,
+            u.headers AS headers,
+            u.response AS response,
+            u.login_account AS loginAccount,
+            u.request_time AS requestTime,
+            u.response_time AS responseTime,
+            u.execution_duration AS executionDuration,
+            u.user_agent AS userAgent,
+            u.response_length AS responseLength,
+            u.cache_status AS cacheStatus,
+    </sql>
+
+    <!-- 通用条件列 -->
+    <sql id="SysLogByCondition">
+        <if test="ip != null and ip != ''">
+            AND ip = #{ip}
+        </if>
+        <if test="url != null and url != ''">
+            AND url = #{url}
+        </if>
+        <if test="method != null and method != ''">
+            AND method = #{method}
+        </if>
+        <if test="parameter != null and parameter != ''">
+            AND parameter = #{parameter}
+        </if>
+        <if test="controller != null and controller != ''">
+            AND controller = #{controller}
+        </if>
+        <if test="accessMethod != null and accessMethod != ''">
+            AND access_method = #{accessMethod}
+        </if>
+        <if test="headers != null and headers != ''">
+            AND headers = #{headers}
+        </if>
+        <if test="response != null and response != ''">
+            AND response = #{response}
+        </if>
+        <if test="loginAccount != null and loginAccount != ''">
+            AND login_account = #{loginAccount}
+        </if>
+        <if test="requestTime != null and requestTime != ''">
+            AND request_time = #{requestTime}
+        </if>
+        <if test="responseTime != null and responseTime != ''">
+            AND response_time = #{responseTime}
+        </if>
+        <if test="executionDuration != null and executionDuration != ''">
+            AND execution_duration = #{executionDuration}
+        </if>
+        <if test="userAgent != null and userAgent != ''">
+            AND user_agent = #{userAgent}
+        </if>
+        <if test="responseLength != null and responseLength != ''">
+            AND response_length = #{responseLength}
+        </if>
+        <if test="cacheStatus != null and cacheStatus != ''">
+            AND cache_status = #{cacheStatus}
+        </if>
+        <if test="list != null and list.size() > 0">
+            AND id IN
+            <foreach collection="list" separator="," item="item" index="index" open="(" close=")">
+                #{item.id}
+            </foreach>
+        </if>
+    </sql>
+
+
+    <!-- 根据主键查询表sys_log信息 -->
+    <select id="selectMapById" resultType="java.util.Map">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM sys_log
+        WHERE
+        id = #{id}
+    </select>
+
+    <!-- 根据条件查询表sys_log信息 -->
+    <select id="selectListByMap" resultType="java.util.Map">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM sys_log
+        <where>
+            <include refid="SysLogByCondition"/>
+        </where>
+    </select>
+
+    <!--检验重复性-->
+    <select id="checkRepetition" parameterType="java.util.Map" resultType="java.util.Map">
+        SELECT
+        id
+        FROM sys_log
+        <where>
+            <if test="id != null and id != ''">
+                AND id != #{id}
+            </if>
+            <include refid="SysLogByCondition"/>
+        </where>
+    </select>
+</mapper>

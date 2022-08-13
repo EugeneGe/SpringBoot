@@ -26,7 +26,7 @@ public class MybatisPlusGenerate {
     private static final String DRIVER_NAME = "com.mysql.jdbc.Driver";
     //-----------------常用变更----------------------
     private static final String DATABASE_NAME = "data_basic";
-    private static final String TABLE_NAME = "sys_user";
+    private static final String TABLE_NAME = "sys_log";
     private static final Boolean SWAGGER_2 = true;
     //表名，多个英文逗号分割 和 tableName二选一配置
     private static final String SCANNER_TABLE_NAME = "";

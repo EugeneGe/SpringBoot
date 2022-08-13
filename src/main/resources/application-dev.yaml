@@ -16,6 +16,12 @@ spring:
       test-on-return: false
       pool-prepared-statements: true
       max-pool-prepared-statement-per-connection-size: 20
+# springboot 版本过高 导致swagger报错解决
+  mvc:
+    pathmatch:
+      matching-strategy: ant_path_matcher
+swagger:
+  enable: true
 
 mybatis-plus:
   # xml扫描，多个目录用逗号或者分号分隔（告诉 Mapper 所对应的 XML 文件位置）
@@ -33,3 +39,4 @@ mybatis-plus:
 #    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
 #    map-underscore-to-camel-case: true # 开启驼峰命名转换:Table{create_time} -> Entity{createTime}
 #    use-generated-keys: true #使用jdbc的getGeneratedKeys获取数据库自增主键值
+
