@@ -41,6 +41,20 @@
             <version>1.1.10</version>
         </dependency>
 
+        <!-- MyBatisPlus -->
+        <!--注意：因MybatisPlus会自动引入Mybatis及Mybatis-Spring依赖，请勿自己添加，以免引起版本冲突-->
+        <dependency>
+            <groupId>com.baomidou</groupId>
+            <artifactId>mybatis-plus-boot-starter</artifactId>
+            <version>3.0.5</version>
+        </dependency>
+        <!--beetl 模板引擎-->
+        <dependency>
+            <groupId>org.freemarker</groupId>
+            <artifactId>freemarker</artifactId>
+            <version>2.3.30</version>
+        </dependency>
+
         <!--lombok 简化实体-->
         <dependency>
             <groupId>org.projectlombok</groupId>
