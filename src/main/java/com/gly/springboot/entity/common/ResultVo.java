@@ -1,4 +1,4 @@
-package com.gly.springboot.entity.sys;
+package com.gly.springboot.entity.common;
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
