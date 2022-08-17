@@ -1,7 +1,5 @@
 package com.gly.springboot.utils;
 
-import com.gly.springboot.entity.sys.SysLog;
-
 import javax.servlet.http.HttpServletRequest;
 import java.util.Enumeration;
 import java.util.HashMap;
@@ -16,28 +14,27 @@ public class LogUtils {
     public LogUtils() {
     }
 
-    public static SysLog getLog(HttpServletRequest request, String loginName) {
-        SysLog log = new SysLog();
-        log.setIp(getCliectIp(request));
-        Map<String, String> map = new HashMap<String, String>();
-        log.setMethod(request.getMethod());
-        log.setUrl(request.getRequestURL().toString());
-        Enumeration headerNames = request.getHeaderNames();
-        while (headerNames.hasMoreElements()) {
-            String key = (String) headerNames.nextElement();
-            String value = request.getHeader(key);
-            map.put(key, value);
-        }
-        log.setHeaders(map.toString());
-        log.setRequestTime(DateUtil.dateToStr());
-        if (loginName != null) {
-            log.setLoginAccount(loginName);
-        } else {
-            log.setLoginAccount("null");
-        }
-
-        return log;
-    }
+//    public static SysLog getLog(HttpServletRequest request, String loginName) {
+//        SysLog log = new SysLog();
+//        log.setIp(getCliectIp(request));
+//        Map<String, String> map = new HashMap<String, String>();
+//        log.setMethod(request.getMethod());
+//        log.setUrl(request.getRequestURL().toString());
+//        Enumeration headerNames = request.getHeaderNames();
+//        while (headerNames.hasMoreElements()) {
+//            String key = (String) headerNames.nextElement();
+//            String value = request.getHeader(key);
+//            map.put(key, value);
+//        }
+//        log.setHeaders(map.toString());
+//        log.setRequestTime(DateUtil.dateToStr());
+//        if (loginName != null) {
+//            log.setLoginAccount(loginName);
+//        } else {
+//            log.setLoginAccount("null");
+//        }
+//        return log;
+//    }
 
     /**
      * 获取客户端ip地址
