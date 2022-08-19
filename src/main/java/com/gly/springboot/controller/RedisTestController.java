@@ -42,7 +42,7 @@ public class RedisTestController {
     public ResultVo<Map<String, Object>> add(@RequestParam String key, @RequestParam String value) {
         ResultVo<Map<String, Object>> resultVo = new ResultVo<>();
         try {
-            redisDao.setKey(key, value);
+            redisDao.setCacheObject(key, value);
             resultVo.setMsg("新增成功！");
             return resultVo;
         } catch (Exception e) {
