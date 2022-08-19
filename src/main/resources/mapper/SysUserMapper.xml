@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.gly.springboot.mapper.SysUserMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.gly.springboot.entity.sys.SysUser">
+        <id column="id" property="id"/>
+        <result column="login_account" property="loginAccount"/>
+        <result column="name" property="name"/>
+        <result column="nick_name" property="nickName"/>
+        <result column="phone" property="phone"/>
+        <result column="last_login_ip" property="lastLoginIp"/>
+        <result column="last_login_date" property="lastLoginDate"/>
+        <result column="data_status" property="dataStatus"/>
+        <result column="email" property="email"/>
+        <result column="sex" property="sex"/>
+        <result column="avatar" property="avatar"/>
+        <result column="post_code" property="postCode"/>
+        <result column="password" property="password"/>
+        <result column="address" property="address"/>
+        <result column="source" property="source"/>
+        <result column="create_time" property="createTime"/>
+        <result column="update_time" property="updateTime"/>
+        <result column="remark" property="remark"/>
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_List">
+        id
+        , login_account, name, nick_name, phone, last_login_ip, last_login_date, data_status, email, sex, avatar, post_code, password, address, source, create_time, update_time, remark
+    </sql>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        id
+        ,login_account AS loginAccount,name,nick_name AS nickName,phone,last_login_ip AS lastLoginIp,last_login_date AS lastLoginDate,data_status AS dataStatus,email,sex,avatar,post_code AS postCode,password,address,source,create_time AS createTime,update_time AS updateTime,remark
+    </sql>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List_2">
+        u
+        .
+        id
+        AS id,
+        u.login_account AS loginAccount,
+        u.name AS name,
+        u.nick_name AS nickName,
+        u.phone AS phone,
+        u.last_login_ip AS lastLoginIp,
+        u.last_login_date AS lastLoginDate,
+        u.data_status AS dataStatus,
+        u.email AS email,
+        u.sex AS sex,
+        u.avatar AS avatar,
+        u.post_code AS postCode,
+        u.password AS password,
+        u.address AS address,
+        u.source AS source,
+        u.create_time AS createTime,
+        u.update_time AS updateTime,
+        u.remark AS remark,
+    </sql>
+
+    <!-- 通用条件列 -->
+    <sql id="SysUserByCondition">
+        <if test="loginAccount != null and loginAccount != ''">
+            AND login_account = #{loginAccount}
+        </if>
+        <if test="name != null and name != ''">
+            AND name = #{name}
+        </if>
+        <if test="nickName != null and nickName != ''">
+            AND nick_name = #{nickName}
+        </if>
+        <if test="phone != null and phone != ''">
+            AND phone = #{phone}
+        </if>
+        <if test="lastLoginIp != null and lastLoginIp != ''">
+            AND last_login_ip = #{lastLoginIp}
+        </if>
+        <if test="lastLoginDate != null and lastLoginDate != ''">
+            AND last_login_date <![CDATA[ = ]]>  #{lastLoginDate}
+        </if>
+        <if test="dataStatus != null and dataStatus != ''">
+            AND data_status = #{dataStatus}
+        </if>
+        <if test="email != null and email != ''">
+            AND email = #{email}
+        </if>
+        <if test="sex != null and sex != ''">
+            AND sex = #{sex}
+        </if>
+        <if test="avatar != null and avatar != ''">
+            AND avatar = #{avatar}
+        </if>
+        <if test="postCode != null and postCode != ''">
+            AND post_code = #{postCode}
+        </if>
+        <if test="password != null and password != ''">
+            AND password = #{password}
+        </if>
+        <if test="address != null and address != ''">
+            AND address = #{address}
+        </if>
+        <if test="source != null and source != ''">
+            AND source = #{source}
+        </if>
+        <if test="createTime != null and createTime != ''">
+            AND create_time <![CDATA[ = ]]>  #{createTime}
+        </if>
+        <if test="updateTime != null and updateTime != ''">
+            AND update_time <![CDATA[ = ]]>  #{updateTime}
+        </if>
+        <if test="remark != null and remark != ''">
+            AND remark = #{remark}
+        </if>
+        <if test="list != null and list.size() > 0">
+            AND id IN
+            <foreach collection="list" separator="," item="item" index="index" open="(" close=")">
+                #{item.id}
+            </foreach>
+        </if>
+    </sql>
+
+    <!-- 根据条件查询表sys_user信息 -->
+    <select id="selectByLoginAccount" resultType="com.gly.springboot.entity.sys.SysUser">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM sys_user
+        where login_account = #{loginAccount}
+
+    </select>
+
+    <!-- 根据条件查询表sys_user信息 -->
+    <select id="selectListByMap" resultType="java.util.Map">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM sys_user
+        <where>
+            <include refid="SysUserByCondition"/>
+        </where>
+    </select>
+</mapper>
