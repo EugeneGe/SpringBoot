@@ -1,10 +1,11 @@
 package com.gly.springboot.redis;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.redis.core.StringRedisTemplate;
+import org.springframework.data.redis.core.*;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Repository;
 
+import java.util.*;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -18,71 +19,220 @@ import java.util.concurrent.TimeUnit;
 @Component
 public class RedisDao {
 
-    /**
-     * redis 生存时间 秒 此次设置两小时
-     */
-    private static Integer LEFT_TIME = 60 * 60 * 2;
-
-    /**
-     * redis 删除时间 秒 此次设置两小时
-     */
-    private static Integer DELETE_TIME = 60 * 60 * 2;
-
-//    @Autowired
-//    private RedisTemplate template;
-
     @Autowired
-    private StringRedisTemplate stringRedisTemplate;
+    private RedisTemplate redisTemplate;
 
     /**
-     * 将key存入缓存中,并设置生存时间
+     * 缓存基本的对象，Integer、String、实体类等
      *
-     * @param key
-     * @param value
+     * @param key   缓存的键值
+     * @param value 缓存的值
      */
-    public void setKeyByTime(String key, String value) {
-        stringRedisTemplate.opsForValue().set(key, value, LEFT_TIME, TimeUnit.SECONDS);
+    public <T> void setCacheObject(final String key, final T value) {
+        redisTemplate.opsForValue().set(key, value);
     }
 
     /**
-     * 将key存入缓存中,不设置时间
+     * 缓存基本的对象，Integer、String、实体类等
      *
-     * @param key
-     * @param value
+     * @param key      缓存的键值
+     * @param value    缓存的值
+     * @param timeout  时间
+     * @param timeUnit 时间颗粒度
      */
-    public void setKey(String key, String value) {
-        //向redis里存入数据
-        stringRedisTemplate.opsForValue().set(key, value);
+    public <T> void setCacheObject(final String key, final T value, final Long timeout, final TimeUnit timeUnit) {
+        redisTemplate.opsForValue().set(key, value, timeout, timeUnit);
     }
 
     /**
-     * 检测缓存中的值和存储时间,刷新
-     * 通过key,此处是随机UUID,获得剩余存储时间.
-     * 通过key获得储存的数据value.
-     * 判断,若value为null,或剩余时间为-1,则返回value即null,此处表示未获得数据,即未登陆或登陆失效.
-     * 若value不为null且剩余时间不为-1,
-     * 刷新,重新将UUID作为key,将信息作为value,设置存储时间,重新存入redis中.
+     * 设置有效时间
      *
-     * @param key 此处为随机生成的UUID
-     * @return 返回result, null则未登陆或失效,
+     * @param key     Redis键
+     * @param timeout 超时时间
+     * @return true=设置成功；false=设置失败
      */
-    public String getValueRefresh(String key) {
-        Long expire = stringRedisTemplate.getExpire(key);
-        String result = stringRedisTemplate.opsForValue().get(key);
-        if (result == null || expire == -1L) {
-            return result;
+    public boolean expire(final String key, final long timeout) {
+        return expire(key, timeout, TimeUnit.SECONDS);
+    }
+
+    /**
+     * 设置有效时间
+     *
+     * @param key     Redis键
+     * @param timeout 超时时间
+     * @param unit    时间单位
+     * @return true=设置成功；false=设置失败
+     */
+    public boolean expire(final String key, final long timeout, final TimeUnit unit) {
+        return redisTemplate.expire(key, timeout, unit);
+    }
+
+    /**
+     * 获取有效时间
+     *
+     * @param key Redis键
+     * @return 有效时间
+     */
+    public long getExpire(final String key) {
+        return redisTemplate.getExpire(key);
+    }
+
+    /**
+     * 判断 key是否存在
+     *
+     * @param key 键
+     * @return true 存在 false不存在
+     */
+    public Boolean hasKey(String key) {
+        return redisTemplate.hasKey(key);
+    }
+
+    /**
+     * 获得缓存的基本对象。
+     *
+     * @param key 缓存键值
+     * @return 缓存键值对应的数据
+     */
+    public <T> T getCacheObject(final String key) {
+        ValueOperations<String, T> operation = redisTemplate.opsForValue();
+        return operation.get(key);
+    }
+
+    /**
+     * 删除单个对象
+     *
+     * @param key
+     */
+    public boolean deleteObject(final String key) {
+        return redisTemplate.delete(key);
+    }
+
+    /**
+     * 删除集合对象
+     *
+     * @param collection 多个对象
+     * @return
+     */
+    public long deleteObject(final Collection collection) {
+        return redisTemplate.delete(collection);
+    }
+
+    /**
+     * 缓存List数据
+     *
+     * @param key      缓存的键值
+     * @param dataList 待缓存的List数据
+     * @return 缓存的对象
+     */
+    public <T> long setCacheList(final String key, final List<T> dataList) {
+        Long count = redisTemplate.opsForList().rightPushAll(key, dataList);
+        return count == null ? 0 : count;
+    }
+
+    /**
+     * 获得缓存的list对象
+     *
+     * @param key 缓存的键值
+     * @return 缓存键值对应的数据
+     */
+    public <T> List<T> getCacheList(final String key) {
+        return redisTemplate.opsForList().range(key, 0, -1);
+    }
+
+    /**
+     * 缓存Set
+     *
+     * @param key     缓存键值
+     * @param dataSet 缓存的数据
+     * @return 缓存数据的对象
+     */
+    public <T> BoundSetOperations<String, T> setCacheSet(final String key, final Set<T> dataSet) {
+        BoundSetOperations<String, T> setOperation = redisTemplate.boundSetOps(key);
+        Iterator<T> it = dataSet.iterator();
+        while (it.hasNext()) {
+            setOperation.add(it.next());
         }
-        stringRedisTemplate.opsForValue().set(key, result, LEFT_TIME, TimeUnit.SECONDS);
-        return result;
+        return setOperation;
     }
 
     /**
-     * 删除redis中存入的key
+     * 获得缓存的set
      *
      * @param key
+     * @return
      */
-    public Boolean deleteValue(String key) {
-        Boolean aBoolean = stringRedisTemplate.delete(key);
-        return aBoolean;
+    public <T> Set<T> getCacheSet(final String key) {
+        return redisTemplate.opsForSet().members(key);
     }
+
+    /**
+     * 缓存Map
+     *
+     * @param key
+     * @param dataMap
+     */
+    public <T> void setCacheMap(final String key, final Map<String, T> dataMap) {
+        if (dataMap != null) {
+            redisTemplate.opsForHash().putAll(key, dataMap);
+        }
+    }
+
+    /**
+     * 获得缓存的Map
+     *
+     * @param key
+     * @return
+     */
+    public <T> Map<String, T> getCacheMap(final String key) {
+        return redisTemplate.opsForHash().entries(key);
+    }
+
+    /**
+     * 往Hash中存入数据
+     *
+     * @param key   Redis键
+     * @param hKey  Hash键
+     * @param value 值
+     */
+    public <T> void setCacheMapValue(final String key, final String hKey, final T value) {
+        redisTemplate.opsForHash().put(key, hKey, value);
+    }
+
+    /**
+     * 获取Hash中的数据
+     *
+     * @param key  Redis键
+     * @param hKey Hash键
+     * @return Hash中的对象
+     */
+    public <T> T getCacheMapValue(final String key, final String hKey) {
+        HashOperations<String, String, T> opsForHash = redisTemplate.opsForHash();
+        return opsForHash.get(key, hKey);
+    }
+
+    /**
+     * 获取多个Hash中的数据
+     *
+     * @param key   Redis键
+     * @param hKeys Hash键集合
+     * @return Hash对象集合
+     */
+    public <T> List<T> getMultiCacheMapValue(final String key, final Collection<Object> hKeys) {
+        return redisTemplate.opsForHash().multiGet(key, hKeys);
+    }
+
+    /**
+     * 获得缓存的基本对象列表
+     *
+     * @param pattern 字符串前缀
+     * @return 对象列表
+     */
+    public Collection<String> keys(final String pattern) {
+        return redisTemplate.keys(pattern);
+    }
+
+    public void incrementAdd(String key) {
+        redisTemplate.opsForValue().increment(key, (long) 1);
+    }
+
 }
