@@ -30,6 +30,14 @@ public interface SysLogMapper extends BaseMapper<SysLog> {
      *
      * @param map
      */
+    List<SysLog> selectList(Map<String, Object> map);
+
+
+    /**
+     * 根据条件查询表SysLog信息
+     *
+     * @param map
+     */
     List<Map<String, Object>> selectListByMap(Map<String, Object> map);
 
     /**
