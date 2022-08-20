@@ -123,6 +123,16 @@
     </select>
 
     <!-- 根据条件查询表sys_log信息 -->
+    <select id="selectList" resultType="com.gly.springboot.entity.sys.SysLog">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM sys_log
+        <where>
+            <include refid="SysLogByCondition"/>
+        </where>
+    </select>
+
+    <!-- 根据条件查询表sys_log信息 -->
     <select id="selectListByMap" resultType="java.util.Map">
         SELECT
         <include refid="Base_Column_List"/>

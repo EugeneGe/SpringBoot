@@ -1,6 +1,7 @@
 package com.gly.springboot.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.gly.springboot.entity.common.ResultVo;
 import com.gly.springboot.entity.sys.SysLog;
 
 import java.util.List;
@@ -22,6 +23,13 @@ public interface ISysLogService extends IService<SysLog> {
      * @param id
      */
     Map<String, Object> selectMapById(String id);
+
+    /**
+     * 根据条件查询表 分页
+     *
+     * @param map
+     */
+    ResultVo<List<SysLog>> selectList(Map<String, Object> map);
 
     /**
      * 根据条件查询表SysLog信息

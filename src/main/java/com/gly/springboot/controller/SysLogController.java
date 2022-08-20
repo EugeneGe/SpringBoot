@@ -1,5 +1,7 @@
 package com.gly.springboot.controller;
 
+import com.baomidou.mybatisplus.core.conditions.Wrapper;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.gly.springboot.entity.common.ResultVo;
 import com.gly.springboot.entity.sys.SysLog;
 import com.gly.springboot.service.ISysLogService;
@@ -12,6 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -30,6 +33,56 @@ public class SysLogController {
 
     @Autowired
     private ISysLogService iSysLogService;
+
+    /**
+     * 新增
+     *
+     * @param sysLog
+     * @return
+     */
+    @ApiOperation(value = "add", notes = "新增")
+    @ResponseBody
+    @PostMapping("/add")
+    public ResultVo<String> add(@RequestBody SysLog sysLog) {
+        ResultVo<String> resultVo = new ResultVo<>();
+        try {
+            if (iSysLogService.save(sysLog)) {
+                resultVo.resultSuccess("新增成功！");
+            } else {
+                resultVo.resultSuccess("新增失败！");
+            }
+            return resultVo;
+        } catch (Exception e) {
+            logger.error(e.getMessage(), e);
+            resultVo.resultFail("新增异常!");
+        }
+        return resultVo;
+    }
+
+    /**
+     * 修改
+     *
+     * @param sysLog
+     * @return
+     */
+    @ApiOperation(value = "edit", notes = "修改")
+    @ResponseBody
+    @PutMapping("/edit")
+    public ResultVo<String> edit(@RequestBody SysLog sysLog) {
+        ResultVo<String> resultVo = new ResultVo<>();
+        try {
+            if (iSysLogService.updateById(sysLog)) {
+                resultVo.resultSuccess("修改成功！");
+            } else {
+                resultVo.resultSuccess("修改失败！");
+            }
+            return resultVo;
+        } catch (Exception e) {
+            logger.error(e.getMessage(), e);
+            resultVo.resultFail("修改异常!");
+        }
+        return resultVo;
+    }
 
     /**
      * web日志记录表根据ID查询信息
@@ -54,5 +107,25 @@ public class SysLogController {
         return resultVo;
     }
 
+    /**
+     * 查询 分页
+     *
+     * @param paramMap
+     * @return
+     */
+    @ApiOperation(value = "列表查询 分页", notes = "根据map查询")
+    @ResponseBody
+    @GetMapping("/selectList")
+    public ResultVo<List<SysLog>> selectList(@RequestBody(required = false) Map<String, Object> paramMap) {
+        ResultVo<List<SysLog>> resultVo = null;
+        try {
+            resultVo = iSysLogService.selectList(paramMap);
+            return resultVo;
+        } catch (Exception e) {
+            logger.error(e.getMessage(), e);
+            resultVo.resultFail("查询异常!");
+        }
+        return resultVo;
+    }
 }
 
