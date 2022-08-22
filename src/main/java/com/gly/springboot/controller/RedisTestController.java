@@ -14,7 +14,7 @@ import java.util.Map;
 
 /**
  * <p>
- * web日志记录表 前端控制器
+ * 前端控制器
  * </p>
  *
  * @author EugeneGe

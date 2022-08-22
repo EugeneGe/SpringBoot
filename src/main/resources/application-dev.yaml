@@ -32,6 +32,13 @@ spring:
         max-wait: -1
         min-idle: 0
     timeout: 10000
+  #ldap 配置
+  ldap:
+    urls: ldap://172.0.0.1:636
+    username: test
+    password: test
+    base: OU=测试公司,DC=test,DC=com
+
 swagger:
   enable: true
 
