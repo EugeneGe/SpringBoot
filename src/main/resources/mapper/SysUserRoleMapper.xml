@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.gly.springboot.mapper.SysUserRoleMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.gly.springboot.entity.sys.SysUserRole">
+        <id column="user_id" property="userId"/>
+        <result column="role_id" property="roleId"/>
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_List">
+        user_id
+        , role_id
+    </sql>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        user_id
+        AS userId,role_id AS roleId
+    </sql>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List_2">
+        u
+        .
+        user_id
+        AS userId,
+            u.role_id AS roleId,
+    </sql>
+
+    <!-- 通用条件列 -->
+    <sql id="SysUserRoleByCondition">
+        <if test="roleId != null and roleId != ''">
+            AND role_id = #{roleId}
+        </if>
+        <if test="list != null and list.size() > 0">
+            AND id IN
+            <foreach collection="list" separator="," item="item" index="index" open="(" close=")">
+                #{item.id}
+            </foreach>
+        </if>
+    </sql>
+
+    <!-- 根据主键查询表sys_user_role信息 -->
+    <select id="selectMapById" resultType="java.util.Map">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM sys_user_role
+        WHERE
+        user_id = #{id}
+    </select>
+
+    <!-- 根据条件查询表sys_user_role信息 -->
+    <select id="listPage" resultType="com.gly.springboot.entity.sys.SysUserRole">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM sys_user_role
+        <where>
+            <include refid="SysUserRoleByCondition"/>
+        </where>
+    </select>
+
+    <!-- 根据条件查询表sys_user_role信息 -->
+    <select id="selectListByMap" resultType="java.util.Map">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM sys_user_role
+        <where>
+            <include refid="SysUserRoleByCondition"/>
+        </where>
+    </select>
+
+    <!--检验重复性-->
+    <select id="checkRepetition" parameterType="java.util.Map" resultType="java.util.Map">
+        SELECT
+        id
+        FROM sys_user_role
+        <where>
+            <if test="id != null and id != ''">
+                AND id != #{id}
+            </if>
+            <include refid="SysUserRoleByCondition"/>
+        </where>
+    </select>
+
+
+    <!--批量修改-->
+    <update id="updateSysUserRoleBatch">
+        UPDATE sys_user_role SET
+        role_id=
+        <foreach collection="list" separator=" " item="item" index="index" open="case " close="end">
+            WHEN id=#{item.id} and test=#{item.test} THEN #{item.roleId}
+        </foreach>
+
+        WHERE (id,test) in
+        <foreach collection="list" separator="," item="item" index="index" open="(" close=")">
+            (#{item.id},#{item.id})
+        </foreach>
+    </update>
+
+
+</mapper>

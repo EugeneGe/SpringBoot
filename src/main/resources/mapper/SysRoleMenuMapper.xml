@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.gly.springboot.mapper.SysRoleMenuMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.gly.springboot.entity.sys.SysRoleMenu">
+        <id column="role_id" property="roleId" />
+        <result column="menu_id" property="menuId"/>
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_List">
+        role_id, menu_id
+    </sql>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        role_id AS roleId,menu_id AS menuId
+    </sql>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List_2">
+            u.role_id AS roleId,
+            u.menu_id AS menuId,
+    </sql>
+
+    <!-- 通用条件列 -->
+    <sql id="SysRoleMenuByCondition">
+        <if test="menuId != null and menuId != ''">
+            AND menu_id = #{menuId}
+        </if>
+        <if test="list != null and list.size() > 0">
+            AND id IN
+            <foreach collection="list" separator="," item="item" index="index" open="(" close=")">
+                #{item.id}
+            </foreach>
+        </if>
+    </sql>
+
+    <!-- 根据主键查询表sys_role_menu信息 -->
+    <select id="selectMapById" resultType="java.util.Map">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM sys_role_menu
+        WHERE
+            role_id = #{id}
+    </select>
+
+    <!-- 根据条件查询表sys_role_menu信息 -->
+    <select id="listPage" resultType="com.gly.rest.entity.SysRoleMenu">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM sys_role_menu
+        <where>
+            <include refid="SysRoleMenuByCondition" />
+        </where>
+    </select>
+
+    <!-- 根据条件查询表sys_role_menu信息 -->
+    <select id="selectListByMap" resultType="java.util.Map">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM sys_role_menu
+    <where>
+        <include refid="SysRoleMenuByCondition" />
+    </where>
+    </select>
+
+    <!--检验重复性-->
+    <select id="checkRepetition" parameterType="java.util.Map" resultType="java.util.Map">
+        SELECT
+        id
+        FROM sys_role_menu
+    <where>
+        <if test="id != null and id != ''">
+            AND id != #{id}
+        </if>
+        <include refid="SysRoleMenuByCondition" />
+    </where>
+    </select>
+
+
+    <!--批量修改-->
+    <update id="updateSysRoleMenuBatch">
+        UPDATE sys_role_menu SET
+        menu_id=
+        <foreach collection="list" separator=" " item="item" index="index" open="case " close="end">
+            WHEN id=#{item.id} and test=#{item.test}  THEN #{item.menuId}
+        </foreach>
+        
+        WHERE (id,test) in
+        <foreach collection="list" separator="," item="item" index="index" open="(" close=")">
+            (#{item.id},#{item.id})
+        </foreach>
+    </update>
+
+
+</mapper>

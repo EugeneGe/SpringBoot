@@ -1,0 +1,223 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.gly.springboot.mapper.SysRoleMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.gly.springboot.entity.sys.SysRole">
+        <id column="role_id" property="roleId"/>
+        <result column="role_name" property="roleName"/>
+        <result column="role_key" property="roleKey"/>
+        <result column="role_sort" property="roleSort"/>
+        <result column="data_scope" property="dataScope"/>
+        <result column="menu_check_strictly" property="menuCheckStrictly"/>
+        <result column="dept_check_strictly" property="deptCheckStrictly"/>
+        <result column="status" property="status"/>
+        <result column="del_flag" property="delFlag"/>
+        <result column="create_by" property="createBy"/>
+        <result column="create_time" property="createTime"/>
+        <result column="update_by" property="updateBy"/>
+        <result column="update_time" property="updateTime"/>
+        <result column="remark" property="remark"/>
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_List">
+        role_id
+        , role_name, role_key, role_sort, data_scope, menu_check_strictly, dept_check_strictly, status, del_flag, create_by, create_time, update_by, update_time, remark
+    </sql>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        role_id
+        AS roleId,role_name AS roleName,role_key AS roleKey,role_sort AS roleSort,data_scope AS dataScope,menu_check_strictly AS menuCheckStrictly,dept_check_strictly AS deptCheckStrictly,status,del_flag AS delFlag,create_by AS createBy,create_time AS createTime,update_by AS updateBy,update_time AS updateTime,remark
+    </sql>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List_2">
+        u
+        .
+        role_id
+        AS roleId,
+            u.role_name AS roleName,
+            u.role_key AS roleKey,
+            u.role_sort AS roleSort,
+            u.data_scope AS dataScope,
+            u.menu_check_strictly AS menuCheckStrictly,
+            u.dept_check_strictly AS deptCheckStrictly,
+            u.status AS status,
+            u.del_flag AS delFlag,
+            u.create_by AS createBy,
+            u.create_time AS createTime,
+            u.update_by AS updateBy,
+            u.update_time AS updateTime,
+            u.remark AS remark,
+    </sql>
+
+    <!-- 通用条件列 -->
+    <sql id="SysRoleByCondition">
+        <if test="roleName != null and roleName != ''">
+            AND role_name = #{roleName}
+        </if>
+        <if test="roleKey != null and roleKey != ''">
+            AND role_key = #{roleKey}
+        </if>
+        <if test="roleSort != null and roleSort != ''">
+            AND role_sort = #{roleSort}
+        </if>
+        <if test="dataScope != null and dataScope != ''">
+            AND data_scope = #{dataScope}
+        </if>
+        <if test="menuCheckStrictly != null and menuCheckStrictly != ''">
+            AND menu_check_strictly = #{menuCheckStrictly}
+        </if>
+        <if test="deptCheckStrictly != null and deptCheckStrictly != ''">
+            AND dept_check_strictly = #{deptCheckStrictly}
+        </if>
+        <if test="status != null and status != ''">
+            AND status = #{status}
+        </if>
+        <if test="delFlag != null and delFlag != ''">
+            AND del_flag = #{delFlag}
+        </if>
+        <if test="createBy != null and createBy != ''">
+            AND create_by = #{createBy}
+        </if>
+        <if test="createTime != null and createTime != ''">
+            AND create_time <![CDATA[ = ]]>  #{createTime}
+        </if>
+        <if test="updateBy != null and updateBy != ''">
+            AND update_by = #{updateBy}
+        </if>
+        <if test="updateTime != null and updateTime != ''">
+            AND update_time <![CDATA[ = ]]>  #{updateTime}
+        </if>
+        <if test="remark != null and remark != ''">
+            AND remark = #{remark}
+        </if>
+        <if test="list != null and list.size() > 0">
+            AND id IN
+            <foreach collection="list" separator="," item="item" index="index" open="(" close=")">
+                #{item.id}
+            </foreach>
+        </if>
+    </sql>
+
+    <!-- 根据主键查询表sys_role信息 -->
+    <select id="selectMapById" resultType="java.util.Map">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM sys_role
+        WHERE
+        role_id = #{id}
+    </select>
+
+    <!-- 根据条件查询表sys_role信息 -->
+    <select id="listPage" resultType="com.gly.springboot.entity.sys.SysRole">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM sys_role
+        <where>
+            <include refid="SysRoleByCondition"/>
+        </where>
+    </select>
+
+    <!-- 根据条件查询表sys_role信息 -->
+    <select id="selectListByMap" resultType="java.util.Map">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM sys_role
+        <where>
+            <include refid="SysRoleByCondition"/>
+        </where>
+    </select>
+
+    <!--检验重复性-->
+    <select id="checkRepetition" parameterType="java.util.Map" resultType="java.util.Map">
+        SELECT
+        id
+        FROM sys_role
+        <where>
+            <if test="id != null and id != ''">
+                AND id != #{id}
+            </if>
+            <include refid="SysRoleByCondition"/>
+        </where>
+    </select>
+
+
+    <!--批量修改-->
+    <update id="updateSysRoleBatch">
+        UPDATE sys_role SET
+        role_name=
+        <foreach collection="list" separator=" " item="item" index="index" open="case " close="end">
+            WHEN id=#{item.id} and test=#{item.test} THEN #{item.roleName}
+        </foreach>
+        ,
+        role_key=
+        <foreach collection="list" separator=" " item="item" index="index" open="case " close="end">
+            WHEN id=#{item.id} and test=#{item.test} THEN #{item.roleKey}
+        </foreach>
+        ,
+        role_sort=
+        <foreach collection="list" separator=" " item="item" index="index" open="case " close="end">
+            WHEN id=#{item.id} and test=#{item.test} THEN #{item.roleSort}
+        </foreach>
+        ,
+        data_scope=
+        <foreach collection="list" separator=" " item="item" index="index" open="case " close="end">
+            WHEN id=#{item.id} and test=#{item.test} THEN #{item.dataScope}
+        </foreach>
+        ,
+        menu_check_strictly=
+        <foreach collection="list" separator=" " item="item" index="index" open="case " close="end">
+            WHEN id=#{item.id} and test=#{item.test} THEN #{item.menuCheckStrictly}
+        </foreach>
+        ,
+        dept_check_strictly=
+        <foreach collection="list" separator=" " item="item" index="index" open="case " close="end">
+            WHEN id=#{item.id} and test=#{item.test} THEN #{item.deptCheckStrictly}
+        </foreach>
+        ,
+        status=
+        <foreach collection="list" separator=" " item="item" index="index" open="case " close="end">
+            WHEN id=#{item.id} and test=#{item.test} THEN #{item.status}
+        </foreach>
+        ,
+        del_flag=
+        <foreach collection="list" separator=" " item="item" index="index" open="case " close="end">
+            WHEN id=#{item.id} and test=#{item.test} THEN #{item.delFlag}
+        </foreach>
+        ,
+        create_by=
+        <foreach collection="list" separator=" " item="item" index="index" open="case " close="end">
+            WHEN id=#{item.id} and test=#{item.test} THEN #{item.createBy}
+        </foreach>
+        ,
+        create_time=
+        <foreach collection="list" separator=" " item="item" index="index" open="case " close="end">
+            WHEN id=#{item.id} and test=#{item.test} THEN #{item.createTime}
+        </foreach>
+        ,
+        update_by=
+        <foreach collection="list" separator=" " item="item" index="index" open="case " close="end">
+            WHEN id=#{item.id} and test=#{item.test} THEN #{item.updateBy}
+        </foreach>
+        ,
+        update_time=
+        <foreach collection="list" separator=" " item="item" index="index" open="case " close="end">
+            WHEN id=#{item.id} and test=#{item.test} THEN #{item.updateTime}
+        </foreach>
+        ,
+        remark=
+        <foreach collection="list" separator=" " item="item" index="index" open="case " close="end">
+            WHEN id=#{item.id} and test=#{item.test} THEN #{item.remark}
+        </foreach>
+
+        WHERE (id,test) in
+        <foreach collection="list" separator="," item="item" index="index" open="(" close=")">
+            (#{item.id},#{item.id})
+        </foreach>
+    </update>
+
+
+</mapper>
