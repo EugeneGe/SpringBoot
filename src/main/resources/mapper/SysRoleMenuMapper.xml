@@ -47,7 +47,7 @@
     </select>
 
     <!-- 根据条件查询表sys_role_menu信息 -->
-    <select id="listPage" resultType="com.gly.rest.entity.SysRoleMenu">
+    <select id="listPage" resultType="com.gly.springboot.entity.sys.SysRoleMenu">
         SELECT
         <include refid="Base_Column_List"/>
         FROM sys_role_menu
