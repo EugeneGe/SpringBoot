@@ -1,6 +1,5 @@
 package ${package.ServiceImpl};
 
-<#--import ${package.Entity}.${entity};-->
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import org.apache.commons.collections.MapUtils;
@@ -32,33 +31,31 @@ public class ${table.serviceImplName} extends ${superServiceImplClass}<${table.m
     return this.baseMapper.selectMapById(id);
     }
 
-    <#--@Override
-    public ResultVo<List<Map<String, Object>>> selectListByMap(Map<String,Object> map){
-        ResultVo<List<Map<String, Object>>> resultVo = new ResultVo<>();
+    @Override
+    public ResultVo<List<${entity}>> listPage(Map<String,Object> map){
+        ResultVo<List<${entity}>> resultVo = new ResultVo<>();
         PageHelper.startPage(MapUtils.getInteger(map, "currentPage"), MapUtils.getInteger(map, "pageSize"));
-        List<Map<String, Object>> list = this.baseMapper.selectListByMap(map);
+        List<${entity}> list = this.baseMapper.listPage(map);
 
-        PageInfo<Map<String, Object>> pageInfo = new PageInfo<>(list);
+        PageInfo<${entity}> pageInfo = new PageInfo<>(list);
         resultVo.resultSuccess(list);
         long total = pageInfo.getTotal();
         resultVo.setTotal((int) (total));
         return resultVo;
-    }-->
+    }
+
     @Override
-    public List<Map<String, Object>> selectListByMap(Map<String,Object> map){
+    public ResultVo<List<Map<String, Object>>> selectListByMap(Map<String,Object> map){
+    ResultVo<List<Map<String, Object>>> resultVo = new ResultVo<>();
     List<Map<String, Object>> list = this.baseMapper.selectListByMap(map);
-    return list;
+    resultVo.resultSuccess(list);
+    return resultVo;
     }
 
     @Override
     public List<Map<String, Object>> checkRepetition(Map<String,Object> map){
         return this.baseMapper.checkRepetition(map);
     }
-
-    <#--@Override
-    public int update${entity}Batch(List<Map<String, Object>> list){
-        return this.baseMapper.update${entity}Batch(list);
-    }-->
 
 }
 </#if>

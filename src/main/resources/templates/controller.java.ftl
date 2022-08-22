@@ -59,7 +59,7 @@ public class ${table.controllerName} {
     </#if>
     @ResponseBody
     @PostMapping("/add")
-    <#--public ResultVo<String> add(@RequestBody ${entity} ${table.entityPath}) {
+    public ResultVo<String> add(@RequestBody ${entity} ${table.entityPath}) {
         ResultVo<String> result = new ResultVo<>();
         try {
             if (i${entity}Service.save(${table.entityPath})) {
@@ -69,22 +69,10 @@ public class ${table.controllerName} {
             }
         } catch (Exception e) {
             result.resultFail("新增异常！");
-            logger.error(e.getMessage(),e);
+            logger.error(e.getMessage(), e);
         }
         return result;
-    }-->
-    public ResponseEntity<String> add(@RequestBody ${entity} ${table.entityPath}) {
-        try {
-        if (i${entity}Service.save(${table.entityPath})) {
-            return ResponseEntity.ok("新增成功！");
-        } else {
-            return ResponseEntity.ok("新增失败！");
-        }
-        } catch (Exception e) {
-        logger.error(e.getMessage(),e);
-        }
-            return ResponseEntity.ok("新增异常！");
-        }
+    }
 
     /**
      * ${table.comment}修改
@@ -93,11 +81,11 @@ public class ${table.controllerName} {
      * @return Result
      */
     <#if swagger2>
-        @ApiOperation(value = "${table.comment}信息", notes = "修改")
+    @ApiOperation(value = "${table.comment}信息", notes = "修改")
     </#if>
     @ResponseBody
-    @PutMapping("/update")
-    <#--public ResultVo<String> update(@RequestBody ${entity} ${table.entityPath}) {
+    @PutMapping("/edit")
+    public ResultVo<String> edit(@RequestBody ${entity} ${table.entityPath}) {
         ResultVo<String> result = new ResultVo<>();
             try {
                 if (i${entity}Service.updateById(${table.entityPath})) {
@@ -107,22 +95,9 @@ public class ${table.controllerName} {
                 }
             } catch (Exception e) {
                 result.resultFail("修改异常！");
-                logger.error(e.getMessage(),e);
+                logger.error(e.getMessage(), e);
             }
         return result;
-    }-->
-    public ResultVo<String> update(@RequestBody ${entity} ${table.entityPath}) {
-        ResultVo<String> result = new ResultVo<>();
-            try {
-            if (i${entity}Service.updateById(${table.entityPath})) {
-            return ResponseEntity.ok("修改成功!");
-            } else {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("修改失败!");
-            }
-            } catch (Exception e) {
-            logger.error(e.getMessage(),e);
-            }
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("修改异常!");
     }
 
     /**
@@ -136,7 +111,7 @@ public class ${table.controllerName} {
     </#if>
     @ResponseBody
     @GetMapping("/selectById")
-    <#--public ResultVo<${entity}> selectById(@RequestParam String id) {
+    public ResultVo<${entity}> selectById(@RequestParam String id) {
         ResultVo<${entity}> result = new ResultVo<>();
         try {
             ${entity} ${table.entityPath} = i${entity}Service.getById(id);
@@ -144,18 +119,32 @@ public class ${table.controllerName} {
             result.setMsg("查询成功！");
         } catch (Exception e) {
             result.resultFail("查询异常！");
-            logger.error(e.getMessage(),e);
+            logger.error(e.getMessage(), e);
         }
         return result;
-    }-->
-    public ResponseEntity<${entity}> selectById(@RequestParam String id) {
+    }
+
+    /**
+    * ${table.comment}查询列表 分页
+    *
+    * @param map
+    * @return Result
+    */
+    <#if swagger2>
+    @ApiOperation(value = "${table.comment}信息", notes = "查询列表 分页")
+    </#if>
+    @ResponseBody
+    @PostMapping("/listPage")
+    public ResultVo<List<${entity}>> listPage(HttpServletRequest request,
+                                                                @RequestBody Map<String, Object> map) {
+        ResultVo<List<${entity}>> result = new ResultVo<>();
         try {
-            ${entity} ${table.entityPath} = i${entity}Service.getById(id);
-            return ResponseEntity.ok(tGoodsCategory);
+            result = i${entity}Service.listPage(map);
         } catch (Exception e) {
-        logger.error(e.getMessage(),e);
+            result.resultFail("查询异常！");
+            logger.error(e.getMessage(), e);
         }
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
+        return result;
     }
 
     /**
@@ -168,29 +157,17 @@ public class ${table.controllerName} {
     @ApiOperation(value = "${table.comment}信息", notes = "查询列表")
     </#if>
     @ResponseBody
-    @PostMapping("/list")
-    <#--public ResultVo<List<Map<String, Object>>> list(HttpServletRequest request,
+    @PostMapping("/selectListByMap")
+    public ResultVo<List<Map<String, Object>>> selectListByMap(HttpServletRequest request,
                                                                 @RequestBody Map<String, Object> map) {
         ResultVo<List<Map<String, Object>>> result = new ResultVo<>();
         try {
-            //map.put("currentPage", 1);
-            //map.put("pageSize", 10);
             result = i${entity}Service.selectListByMap(map);
         } catch (Exception e) {
             result.resultFail("查询异常！");
             logger.error(e.getMessage(), e);
         }
         return result;
-    }-->
-    public ResponseEntity<List<Map<String, Object>>> list(HttpServletRequest request,
-    @RequestBody Map<String, Object> map) {
-    try {
-            List<Map<String, Object>> list = i${entity}Service.selectListByMap(map);
-            return ResponseEntity.ok(list);
-    } catch (Exception e) {
-    logger.error(e.getMessage(), e);
-    }
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
     }
 }
 </#if>

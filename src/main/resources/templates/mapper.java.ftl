@@ -1,8 +1,8 @@
 package ${package.Mapper};
 
-<#--import ${package.Entity}.${entity};-->
 import ${superMapperClassPackage};
 import org.apache.ibatis.annotations.Param;
+import org.apache.ibatis.annotations.Mapper;
 
 import java.util.*;
 
@@ -17,6 +17,7 @@ import java.util.*;
 <#if kotlin>
 interface ${table.mapperName} : ${superMapperClass}<${entity}>
 <#else>
+@Mapper
 public interface ${table.mapperName} extends ${superMapperClass}<${entity}> {
 
     /**
@@ -26,6 +27,13 @@ public interface ${table.mapperName} extends ${superMapperClass}<${entity}> {
     */
     Map<String, Object> selectMapById(@Param("id") String id);
 
+
+    /**
+    * 根据条件查询表${entity}信息 分页
+    *
+    * @param map
+    */
+    List<${entity}> listPage(Map<String, Object> map);
 
     /**
     * 根据条件查询表${entity}信息
@@ -41,13 +49,13 @@ public interface ${table.mapperName} extends ${superMapperClass}<${entity}> {
     */
     List<Map<String, Object>> checkRepetition(Map<String, Object> map);
 
-   <#-- /**
+    /**
     * 批量修改
     *
     * @param list
     * @return int
     */
-    int update${entity}Batch(@Param("list") List<Map<String, Object>> list);-->
+    int update${entity}Batch(@Param("list") List<${entity}> list);
 
 }
 </#if>
