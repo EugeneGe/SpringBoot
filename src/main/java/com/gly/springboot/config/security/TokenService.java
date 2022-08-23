@@ -1,8 +1,8 @@
-package com.gly.springboot.config.jwt;
+package com.gly.springboot.config.security;
 
 import com.alibaba.fastjson.JSONObject;
-import com.gly.springboot.config.jwt.entity.SecurityConstants;
-import com.gly.springboot.config.jwt.utils.JwtUtils;
+import com.gly.springboot.config.security.entity.SecurityConstants;
+import com.gly.springboot.config.security.utils.JwtUtils;
 import com.gly.springboot.entity.sys.LoginUser;
 import com.gly.springboot.redis.RedisDao;
 import com.gly.springboot.utils.IdUtils;

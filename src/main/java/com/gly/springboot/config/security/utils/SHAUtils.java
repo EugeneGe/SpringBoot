@@ -1,4 +1,4 @@
-package com.gly.springboot.config.jwt.utils;
+package com.gly.springboot.config.security.utils;
 
 import org.apache.commons.codec.digest.DigestUtils;
 import org.bouncycastle.jce.provider.BouncyCastleProvider;

@@ -1,6 +1,6 @@
-package com.gly.springboot.config.jwt.utils;
+package com.gly.springboot.config.security.utils;
 
-import com.gly.springboot.config.jwt.entity.SecurityConstants;
+import com.gly.springboot.config.security.entity.SecurityConstants;
 import com.gly.springboot.utils.text.ConvertUtils;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;

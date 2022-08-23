@@ -1,9 +1,4 @@
-package com.gly.springboot.config.jwt.utils;
-
-import com.gly.springboot.config.jwt.entity.SecurityConstants;
-import com.gly.springboot.entity.sys.LoginUser;
-
-import javax.servlet.http.HttpServletRequest;
+package com.gly.springboot.config.security.utils;
 
 /**
  * 权限获取工具类

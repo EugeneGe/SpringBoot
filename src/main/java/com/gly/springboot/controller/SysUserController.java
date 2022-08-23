@@ -2,8 +2,8 @@ package com.gly.springboot.controller;
 
 import com.baomidou.mybatisplus.core.conditions.Wrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import com.gly.springboot.config.jwt.TokenService;
-import com.gly.springboot.config.jwt.utils.SecurityUtils;
+import com.gly.springboot.config.security.TokenService;
+import com.gly.springboot.config.security.utils.SecurityUtils;
 import com.gly.springboot.entity.common.ResultVo;
 import com.gly.springboot.entity.sys.Login;
 import com.gly.springboot.entity.sys.LoginUser;
