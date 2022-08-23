@@ -1,4 +1,4 @@
-package com.gly.springboot.config.jwt.entity;
+package com.gly.springboot.config.security.entity;
 
 /**
  * Token的Key常量
