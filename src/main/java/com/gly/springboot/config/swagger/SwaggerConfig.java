@@ -41,7 +41,7 @@ public class SwaggerConfig {
                 .apiInfo(apiInfo())
                 .groupName("smp").select()
                 .apis(RequestHandlerSelectors.basePackage("com.gly.springboot.controller"))
-                .paths(PathSelectors.ant("/base/**")).build();
+                .paths(PathSelectors.ant("/**")).build();
     }
     //docket2是显示admin的
 //    @Bean
