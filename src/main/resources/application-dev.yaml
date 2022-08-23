@@ -54,8 +54,9 @@ mybatis-plus:
   #    id-type: 0
   #字段策略 0:"忽略判断",1:"非 NULL 判断"),2:"非空判断"
   #    field-strategy: 2
-#  configuration:
-#    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+  # 日志打印
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
 #    map-underscore-to-camel-case: true # 开启驼峰命名转换:Table{create_time} -> Entity{createTime}
 #    use-generated-keys: true #使用jdbc的getGeneratedKeys获取数据库自增主键值
 
