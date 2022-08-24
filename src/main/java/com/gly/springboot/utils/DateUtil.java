@@ -6,6 +6,8 @@ import java.math.BigDecimal;
 import java.text.ParseException;
 import java.text.ParsePosition;
 import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.*;
 
 /**
@@ -20,6 +22,7 @@ public class DateUtil {
     public static String patternDateTime = "yyyy-MM-dd HH:mm:ss";
     public static String patternDateTimeS = "yyyy-MM-dd HH:mm:ss.SSS";
     public static String patternDateTime1 = "yyyy/MM/dd HH:mm:ss";
+    public static String patternDateTimeFull = "yyyyMMddHHmmss";
     public static String patternDateTimeLong = "yyyyMMddHHmmssSSS";
 
     /**
@@ -818,6 +821,15 @@ public class DateUtil {
         c.add(Calendar.YEAR, -1);
         Date date = c.getTime();
         return formats.format(date);
+    }
+
+    public static String formatFullTime(LocalDateTime localDateTime) {
+        return formatFullTime(localDateTime, patternDateTimeFull);
+    }
+
+    public static String formatFullTime(LocalDateTime localDateTime, String pattern) {
+        DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern(pattern);
+        return localDateTime.format(dateTimeFormatter);
     }
 
 }

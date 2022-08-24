@@ -21,7 +21,7 @@ import java.util.Map;
  * @since 2022-08-13
  */
 @RestController
-@RequestMapping("/base/redis")
+@RequestMapping("/test/redis")
 @Api(value = "RedisTestController", tags = "RedisTestController控制器")
 public class RedisTestController {
     private final static Logger logger = LoggerFactory.getLogger(RedisTestController.class);
