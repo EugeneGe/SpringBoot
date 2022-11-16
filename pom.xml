@@ -37,6 +37,11 @@
         <commons.fileupload.version>1.4</commons.fileupload.version>
         <poi.version>4.1.2</poi.version>
         <velocity.version>2.3</velocity.version>
+        <commons-collections4.version>4.4</commons-collections4.version>
+        <commons-lang3.version>3.10</commons-lang3.version>
+        <httpmime.version>4.5.6</httpmime.version>
+        <httpcore.version>4.4.6</httpcore.version>
+        <pinyin4j.version>2.5.1</pinyin4j.version>
     </properties>
 
     <!-- 依赖声明 -->
@@ -169,40 +174,69 @@
                 <version>${fastjson.version}</version>
             </dependency>
 
-<!--            &lt;!&ndash; 定时任务&ndash;&gt;-->
-<!--            <dependency>-->
-<!--                <groupId>com.ruoyi</groupId>-->
-<!--                <artifactId>ruoyi-quartz</artifactId>-->
-<!--                <version>${ruoyi.version}</version>-->
-<!--            </dependency>-->
+            <dependency>
+                <groupId>org.apache.commons</groupId>
+                <artifactId>commons-collections4</artifactId>
+                <version>${commons-collections4.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.commons</groupId>
+                <artifactId>commons-lang3</artifactId>
+                <version>${commons-lang3.version}</version>
+            </dependency>
 
-<!--            &lt;!&ndash; 代码生成&ndash;&gt;-->
-<!--            <dependency>-->
-<!--                <groupId>com.ruoyi</groupId>-->
-<!--                <artifactId>ruoyi-generator</artifactId>-->
-<!--                <version>${ruoyi.version}</version>-->
-<!--            </dependency>-->
+            <dependency>
+                <groupId>org.apache.httpcomponents</groupId>
+                <artifactId>httpmime</artifactId>
+                <version>${httpmime.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.httpcomponents</groupId>
+                <artifactId>httpcore</artifactId>
+                <version>${httpcore.version}</version>
+            </dependency>
 
-<!--            &lt;!&ndash; 核心模块&ndash;&gt;-->
-<!--            <dependency>-->
-<!--                <groupId>com.ruoyi</groupId>-->
-<!--                <artifactId>ruoyi-framework</artifactId>-->
-<!--                <version>${ruoyi.version}</version>-->
-<!--            </dependency>-->
+            <!--汉字获取拼音或首字母工具类-->
+            <dependency>
+                <groupId>com.belerweb</groupId>
+                <artifactId>pinyin4j</artifactId>
+                <version>${pinyin4j.version}</version>
+            </dependency>
 
-<!--            &lt;!&ndash; 系统模块&ndash;&gt;-->
-<!--            <dependency>-->
-<!--                <groupId>com.ruoyi</groupId>-->
-<!--                <artifactId>ruoyi-system</artifactId>-->
-<!--                <version>${ruoyi.version}</version>-->
-<!--            </dependency>-->
+            <!--            &lt;!&ndash; 定时任务&ndash;&gt;-->
+            <!--            <dependency>-->
+            <!--                <groupId>com.ruoyi</groupId>-->
+            <!--                <artifactId>ruoyi-quartz</artifactId>-->
+            <!--                <version>${ruoyi.version}</version>-->
+            <!--            </dependency>-->
 
-<!--            &lt;!&ndash; 通用工具&ndash;&gt;-->
-<!--            <dependency>-->
-<!--                <groupId>com.ruoyi</groupId>-->
-<!--                <artifactId>ruoyi-common</artifactId>-->
-<!--                <version>${ruoyi.version}</version>-->
-<!--            </dependency>-->
+            <!--            &lt;!&ndash; 代码生成&ndash;&gt;-->
+            <!--            <dependency>-->
+            <!--                <groupId>com.ruoyi</groupId>-->
+            <!--                <artifactId>ruoyi-generator</artifactId>-->
+            <!--                <version>${ruoyi.version}</version>-->
+            <!--            </dependency>-->
+
+            <!--            &lt;!&ndash; 核心模块&ndash;&gt;-->
+            <!--            <dependency>-->
+            <!--                <groupId>com.ruoyi</groupId>-->
+            <!--                <artifactId>ruoyi-framework</artifactId>-->
+            <!--                <version>${ruoyi.version}</version>-->
+            <!--            </dependency>-->
+
+            <!--            &lt;!&ndash; 系统模块&ndash;&gt;-->
+            <!--            <dependency>-->
+            <!--                <groupId>com.ruoyi</groupId>-->
+            <!--                <artifactId>ruoyi-system</artifactId>-->
+            <!--                <version>${ruoyi.version}</version>-->
+            <!--            </dependency>-->
+
+            <!--            &lt;!&ndash; 通用工具&ndash;&gt;-->
+            <!--            <dependency>-->
+            <!--                <groupId>com.ruoyi</groupId>-->
+            <!--                <artifactId>ruoyi-common</artifactId>-->
+            <!--                <version>${ruoyi.version}</version>-->
+            <!--            </dependency>-->
 
         </dependencies>
     </dependencyManagement>
@@ -213,6 +247,7 @@
         <module>generate-sm</module>
         <module>system-smp</module>
         <module>generate-smp</module>
+        <module>job</module>
     </modules>
     <packaging>pom</packaging>
 
