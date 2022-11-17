@@ -264,6 +264,8 @@
         <module>job</module>
         <module>ruoyi</module>
         <module>ruoyi-vue</module>
+        <module>modules</module>
+        <module>modules/xxl-job</module>
     </modules>
     <packaging>pom</packaging>
 
