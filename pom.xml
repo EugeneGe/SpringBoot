@@ -262,6 +262,7 @@
         <module>system-smp</module>
         <module>generate-smp</module>
         <module>job</module>
+        <module>ruoyi</module>
     </modules>
     <packaging>pom</packaging>
 
