@@ -263,6 +263,7 @@
         <module>generate-smp</module>
         <module>job</module>
         <module>ruoyi</module>
+        <module>ruoyi-vue</module>
     </modules>
     <packaging>pom</packaging>
 
