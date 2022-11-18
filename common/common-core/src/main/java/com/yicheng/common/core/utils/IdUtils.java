@@ -1,4 +1,6 @@
-package com.yicheng.common.utils;
+package com.yicheng.common.core.utils;
+
+import cn.hutool.core.lang.UUID;
 
 /**
  * ID生成器工具类

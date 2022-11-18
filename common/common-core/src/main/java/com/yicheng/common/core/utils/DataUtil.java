@@ -1,4 +1,4 @@
-package com.yicheng.common.utils;
+package com.yicheng.common.core.utils;
 
 import java.util.Arrays;
 import java.util.HashSet;

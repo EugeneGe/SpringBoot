@@ -11,49 +11,34 @@
 
     <groupId>com.yicheng</groupId>
     <artifactId>common</artifactId>
+    <packaging>pom</packaging>
+    <modules>
+        <module>common-redis</module>
+        <module>common-core</module>
+    </modules>
 
     <properties>
         <maven.compiler.source>8</maven.compiler.source>
         <maven.compiler.target>8</maven.compiler.target>
+
+        <fastjson.version>2.0.9</fastjson.version>
     </properties>
 
-    <dependencies>
-        <!--http 工具类 -->
-        <dependency>
-            <groupId>org.apache.httpcomponents</groupId>
-            <artifactId>httpcore</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.apache.httpcomponents</groupId>
-            <artifactId>httpclient</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.apache.httpcomponents</groupId>
-            <artifactId>httpmime</artifactId>
-        </dependency>
+    <dependencyManagement>
+        <dependencies>
+            <!-- 核心包-->
+            <dependency>
+                <groupId>com.yicheng</groupId>
+                <artifactId>common-core</artifactId>
+                <version>${yicheng.version}</version>
+            </dependency>
 
-        <!--工具类-->
-        <dependency>
-            <groupId>commons-io</groupId>
-            <artifactId>commons-io</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.apache.commons</groupId>
-            <artifactId>commons-lang3</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.apache.commons</groupId>
-            <artifactId>commons-collections4</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>com.alibaba</groupId>
-            <artifactId>fastjson</artifactId>
-        </dependency>
-
-        <!--汉字获取拼音或首字母工具类-->
-        <dependency>
-            <groupId>com.belerweb</groupId>
-            <artifactId>pinyin4j</artifactId>
-        </dependency>
-    </dependencies>
+            <!-- redis-->
+            <dependency>
+                <groupId>com.yicheng</groupId>
+                <artifactId>common-redis</artifactId>
+                <version>${yicheng.version}</version>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
 </project>

@@ -18,7 +18,7 @@
 
     <properties>
         <java.version>1.8</java.version>
-        <yicheng.version>1.0.0</yicheng.version>
+        <yicheng.version>0.0.1-SNAPSHOT</yicheng.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <maven-jar-plugin.version>3.1.1</maven-jar-plugin.version>
@@ -52,6 +52,9 @@
         <httpmime.version>4.5.6</httpmime.version>
         <httpcore.version>4.4.6</httpcore.version>
         <pinyin4j.version>2.5.1</pinyin4j.version>
+        <commons-beanutils.version>1.9.2</commons-beanutils.version>
+        <hutool.version>5.8.5</hutool.version>
+        <bcprov-jdk15on.version>1.59</bcprov-jdk15on.version>
 
         <netty-all.version>4.1.63.Final</netty-all.version>
         <gson.version>2.9.0</gson.version>
@@ -245,12 +248,12 @@
             <!--                <version>${ruoyi.version}</version>-->
             <!--            </dependency>-->
 
-            <!--            &lt;!&ndash; 通用工具&ndash;&gt;-->
-            <!--            <dependency>-->
-            <!--                <groupId>com.ruoyi</groupId>-->
-            <!--                <artifactId>ruoyi-common</artifactId>-->
-            <!--                <version>${ruoyi.version}</version>-->
-            <!--            </dependency>-->
+            <!-- 核心包-->
+            <dependency>
+                <groupId>com.yicheng</groupId>
+                <artifactId>common</artifactId>
+                <version>${yicheng.version}</version>
+            </dependency>
 
         </dependencies>
     </dependencyManagement>
@@ -261,7 +264,6 @@
         <module>generate-sm</module>
         <module>system-smp</module>
         <module>generate-smp</module>
-        <module>job</module>
         <module>ruoyi</module>
         <module>ruoyi-vue</module>
         <module>modules</module>
